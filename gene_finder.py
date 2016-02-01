@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-YOUR HEADER COMMENT HERE
+YOUR HEADER COMMENT HERE:
+GENE FINDER CODE FOR THE 02-01 CHECK-IN.  SIX OF THE FUNCTIONS HAVE BEEN
+IMPLEMENTED AND TESTED USING PYTHONTUTOR.COM.  AT THIS POINT DOCTESTING HAS 
+NOT BEEN USED BECAUSE I DO NOT UNDERSTAND HOW IT WORKS. I WILL TALK WITH
+A NINJA TO FIGURE IT OUT BEFORE THE NEXT PART OF THE PROJECT IS DUE.
 
-@author: YOUR NAME HERE
+@author: REBECCA PATTERSON
 
 """
 
@@ -31,7 +35,18 @@ def get_complement(nucleotide):
     'G'
     """
     # TODO: implement this
-    pass
+    #pass
+    if nucleotide == 'A' :
+       return 'T'
+    elif nucleotide == 'T' :
+       return 'A'
+    elif nucleotide == 'C' :
+        return 'G'
+    elif nucleotide == 'G' :
+        return 'C'
+    else :
+        return 'not a DNA nucleotide'
+
 
 
 def get_reverse_complement(dna):
@@ -46,7 +61,15 @@ def get_reverse_complement(dna):
     'TGAACGCGG'
     """
     # TODO: implement this
-    pass
+    #pass
+    reverse_complement= ''
+    i= len(dna)-1
+    while i >=0 :
+        reverse_complement+=(get_complement(dna[i]))
+        i= i-1
+
+    return reverse_complement	
+        
 
 
 def rest_of_ORF(dna):
@@ -63,7 +86,22 @@ def rest_of_ORF(dna):
     'ATGAGA'
     """
     # TODO: implement this
-    pass
+    #pass	    
+    i=0
+    j=3
+    while i<= len(dna)-1 :
+    	if dna[i:j]== 'TAA' :
+    		return dna[:i]
+    	if dna[i:j]== 'TAG' :
+    	    return dna[:i]
+    	if dna[i:j]== 'TGA' :
+    		return dna[:i]
+    	else :
+    	    i= i+3
+    	    j= j+3
+
+    return dna	
+            
 
 
 def find_all_ORFs_oneframe(dna):
@@ -80,7 +118,21 @@ def find_all_ORFs_oneframe(dna):
     ['ATGCATGAATGTAGA', 'ATGTGCCC']
     """
     # TODO: implement this
-    pass
+    #pass
+    all_frame_orfs= []
+    i=0
+    j=3
+    while i<= len(dna)-1:
+        if dna[i:j]== 'ATG' :
+            all_frame_orfs.append(rest_of_ORF(dna[i:]))
+            i= i+len(rest_of_ORF(dna[i:]))
+            j= j+i
+        else:
+        	i=i+3
+            j=j+3
+
+    return all_frame_orfs    
+
 
 
 def find_all_ORFs(dna):
@@ -97,7 +149,14 @@ def find_all_ORFs(dna):
     ['ATGCATGAATGTAG', 'ATGAATGTAG', 'ATG']
     """
     # TODO: implement this
-    pass
+    #pass
+    all_orfs= []
+    i=0
+    while i<3 :
+        all_orfs.extend(find_all_ORFs_oneframe(dna[i:]))
+        i= i+1
+    return all_orfs
+
 
 
 def find_all_ORFs_both_strands(dna):
@@ -110,7 +169,12 @@ def find_all_ORFs_both_strands(dna):
     ['ATGCGAATG', 'ATGCTACATTCGCAT']
     """
     # TODO: implement this
-    pass
+    #pass
+    all_both_orfs=[]
+    reverse= get_reverse_complement(dna)
+    all_both_orfs.extend(find_all_ORFs(dna))
+    all_both_orfs.extend(find_all_ORFs(reverse))
+    return all_both_orfs
 
 
 def longest_ORF(dna):
