@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 YOUR HEADER COMMENT HERE:
-GENE FINDER CODE FOR THE 02-01 CHECK-IN.  SIX OF THE FUNCTIONS HAVE BEEN
-IMPLEMENTED AND TESTED USING PYTHONTUTOR.COM.  AT THIS POINT DOCTESTING HAS 
-NOT BEEN USED BECAUSE I DO NOT UNDERSTAND HOW IT WORKS. I WILL TALK WITH
-A NINJA TO FIGURE IT OUT BEFORE THE NEXT PART OF THE PROJECT IS DUE.
+GENE FINDER CODE AS OF 02-07-16.  HAS ALL FUNCTIONALITY TO MY KNOWLEDGE.
 
 @author: REBECCA PATTERSON
 
@@ -156,9 +153,10 @@ def longest_ORF(dna):
     """
     longest=''
     i=0
-    while i<len(find_all_ORFs_both_strands(dna)) :
-        if find_all_ORFs_both_strands(dna)[i]> len(longest) :
-            longest= find_all_ORFs_both_strands(dna)[i]
+    orfs= find_all_ORFs_both_strands(dna)
+    while i<len(orfs) :
+        if orfs[i]> len(longest) :
+            longest= orfs[i]
         i+=1
     return longest        
 
@@ -218,15 +216,24 @@ def gene_finder(dna):
     amino_sequences=[]
     print 'starting while loop'
     while i<len(all_orfs) :
-        if all_orfs[i]>threshold :
+        if len(all_orfs[i])>threshold :
             amino= coding_strand_to_AA(all_orfs[i])
-            amino_sequences.extend(amino)
-            print 'added an amino sequence'
+            amino_sequences.append(amino)
         i+=1
-    return amino_sequences   
+    print 'found all amino sequences'
+    print amino_sequences    
     
 
-    import doctest
-    doctest.run_docstring_examples(get_complement, globals(), verbose=True)
+#    import doctest
+#    doctest.run_docstring_examples(get_complement,             globals(), verbose=True)
+#    doctest.run_docstring_examples(get_reverse_complement,     globals(), verbose=True)
+#    doctest.run_docstring_examples(rest_of_ORF,                globals(), verbose=True)
+#    doctest.run_docstring_examples(find_all_ORFs_oneframe,     globals(), verbose=True)
+#    doctest.run_docstring_examples(find_all_ORFs,              globals(), verbose=True)
+#    doctest.run_docstring_examples(find_all_ORFs_both_strands, globals(), verbose=True)
+#    doctest.run_docstring_examples(longest_ORF,                globals(), verbose=True)
+#    doctest.run_docstring_examples(coding_strand_to_AA,        globals(), verbose=True)
 
-#gene_finder(load_seq("./data/X73525.fa"))
+
+
+gene_finder(load_seq("./data/X73525.fa"))
