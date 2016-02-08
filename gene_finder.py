@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-YOUR HEADER COMMENT HERE:
-GENE FINDER CODE AS OF 02-07-16.  HAS ALL FUNCTIONALITY TO MY KNOWLEDGE.
+GENE FINDER CODE 02-08-16.  INPUT IS A SEQUENCE OF SALMONELLA DNA
+FROM A FASTA FILE.  OUTPUT IS A LIST OF AN AMINO ACID 
+SEQUENCES THAT ARE IDENTIFIABLE ON BLAST (http://blast.ncbi.nlm.nih.gov/
+Blast.cgi?PROGRAM=blastp&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome).
 
 @author: REBECCA PATTERSON
 
@@ -209,18 +211,17 @@ def gene_finder(dna):
     """
     print 'finding threshold'
     threshold= longest_ORF_noncoding(dna,1500)
-    print threshold
+    print 'threshold=', threshold
     print 'finding all orfs'
     all_orfs= find_all_ORFs_both_strands(dna)
     i=0
     amino_sequences=[]
-    print 'starting while loop'
+    print 'finding amino acid sequences'
     while i<len(all_orfs) :
         if len(all_orfs[i])>threshold :
             amino= coding_strand_to_AA(all_orfs[i])
             amino_sequences.append(amino)
         i+=1
-    print 'found all amino sequences'
     print amino_sequences    
     
 
@@ -233,7 +234,5 @@ def gene_finder(dna):
 #    doctest.run_docstring_examples(find_all_ORFs_both_strands, globals(), verbose=True)
 #    doctest.run_docstring_examples(longest_ORF,                globals(), verbose=True)
 #    doctest.run_docstring_examples(coding_strand_to_AA,        globals(), verbose=True)
-
-
 
 gene_finder(load_seq("./data/X73525.fa"))
